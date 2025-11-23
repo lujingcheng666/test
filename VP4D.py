@@ -296,8 +296,3 @@ while time<TT:
     
     print(f'time = {time}, perturb {perturb}, energy {energy}')
     
-
-# file_name = 'VP4D_eps0.01_no_H.npz'
-# file_name = 'VP4D_eps0.01_cancellation.npz'
-
-# np.savez(file_name, f=f, eps=eps, Perturb=Perturb, Energy=Energy, Time=Time)
