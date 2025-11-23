@@ -49,13 +49,6 @@ if test_case == 'ts':
         w2/np.sqrt(2*pi)/Sig*np.exp(-(v-u2)**2/2/Sig**2);
 
 if test_case == 'bt':
-    # Sig1 = 1;
-    # Sig2 = np.sqrt(0.5);
-    # w1 = 0.8;
-    # w2 = 0.2;
-    # u1 = -2;
-    # u2 = 3.5;
-    
     Sig1 = 1;
     Sig2 = 0.5;
     w1 = 0.9;
@@ -424,23 +417,10 @@ Lbest = 1/2*np.sum((Fini_total[-1,:]-feq)**2*hx*hv);
 param_best = copy.deepcopy(hnet.state_dict());
 # param_best_list = [];
 
-# ts: lr=5e-3, bt: lr=1e-3/2e-3
+# ts: lr=5e-3, bt: lr=2e-3
 optimizer_pre = torch.optim.Adagrad(hnet.parameters(), lr=5e-3) 
-# ts: lr=5e-4, bt: lr=2e-4/3e-4
+# ts: lr=5e-4, bt: lr=3e-4
 optimizer_main = torch.optim.Adam(hnet.parameters(), lr=5e-4) 
-
-# decay = [];
-# no_decay = [];
-# for name, param in hnet.named_parameters():
-#     if 'bias' in name or 'LayerNorm.weight' in name:
-#         no_decay.append(param)
-#     else:
-#         decay.append(param)
-
-# optimizer_main = torch.optim.AdamW([
-#     {'params': decay, 'weight_decay': 1e-4},
-#     {'params': no_decay, 'weight_decay': 0.0}
-# ], lr=5e-4)
 
 while iter < maxiter:
     fp = generate_perturbation(xvbasis, epsp);
@@ -525,14 +505,3 @@ plt.show()
 
 plt.plot(x, Htest[0, :], x, Htest[-1, :])
 plt.show()
-
-# labels = [];
-# for i in range(len(param_best_list)):
-#     hnet_best.load_state_dict(param_best_list[i])
-#     Fbest, Tbest, Enbest = VP2DForward(x, v, f0, feq, hnet_best, ion, 120);
-#     perturb = 1/2*np.sum(np.sum((Fbest-feq)**2*hx*hv, 1), 1);
-#     plt.semilogy(Tbest,perturb)
-#     labels.append(f'best among {i*1000} iters')
-# plt.legend(labels)
-# plt.axvline(TT, color='k')
-# plt.show()
